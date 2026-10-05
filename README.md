@@ -1,66 +1,69 @@
-# 🤖 AI Data Assistant
+# 🤖 AI Data Assistant (Open WebUI + LM Studio / Ollama + PostgreSQL)
 
-Asistente de IA privado que conecta modelos de lenguaje locales (LLMs) con bases de datos en tiempo real. Diseñado para que cualquier empresa pueda hacer preguntas sobre sus propios datos sin depender de servicios externos como ChatGPT.
+Asistente de IA privado que conecta **Open WebUI** con modelos de lenguaje locales (LLMs) ejecutados a través de **LM Studio / Ollama** y bases de datos PostgreSQL en tiempo real mediante herramientas personalizadas en Python.
 
----
-
-## ✨ ¿Qué hace?
-
-- Responde preguntas en lenguaje natural sobre datos reales de una base de datos
-- Funciona 100% en local — los datos nunca salen de la empresa
-- Integración con bots de Telegram para consultas desde cualquier lugar
-- Automatización de flujos con n8n
-- RAG con documentos internos (manuales, catálogos, procedimientos)
+Diseñado para permitir a empresas realizar consultas sobre sus propios datos manteniendo **privacidad total (100% On-Premise, sin costes por API y totalmente gratuito)**.
 
 ---
 
-## 🛠️ Tecnologías usadas
+## ✨ Características clave
 
-| Capa | Tecnología |
+- 🔒 **100% Privado, Gratuito y Local:** Basado en modelos de código abierto ejecutados en local mediante LM Studio o Ollama. Los datos nunca salen de la infraestructura de la empresa.
+- ⚡ **Consultas SQL en tiempo real:** Herramienta personalizada de Python que traduce preguntas en lenguaje natural a consultas `SELECT`.
+- 🛡️ **Seguridad integrada:** Filtros estrictos de solo lectura (bloqueo de `DELETE`, `UPDATE`, `DROP`) y timeout de ejecución.
+- 🐳 **Despliegue en Docker:** Entorno contenedorizado para la interfaz con Open WebUI.
+- 📚 **Soporte RAG:** Integración con bases de conocimiento internas (documentación, manuales).
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Componente | Tecnología |
 |---|---|
-| Modelo de IA | Ollama + modelos locales (Qwen, Llama, Mistral) |
-| Base de datos | PostgreSQL |
-| Interfaz de chat | Open WebUI |
-| Automatización | n8n |
-| Bots | Telegram Bot API |
+| Interfaz de Usuario | Open WebUI |
+| Motor de Inferencia Local | LM Studio (Modo Servidor OpenAI-compatible) / Ollama |
+| Base de Datos | PostgreSQL |
+| Integración Custom | Python (`psycopg2`) con validación de seguridad |
 | Contenedores | Docker + Docker Compose |
-| Backend | Python + FastAPI |
 
 ---
 
-## 🏗️ Arquitectura
+## 🏗️ Arquitectura del Sistema
 
 ```
-👤 Usuario
+👤 Empleados (Navegador Web)
     │
     ▼
-💬 Telegram Bot  ──────  🖥️ Open WebUI
-    │                         │
-    └──────────┬──────────────┘
-               │
-               ▼
-        ⚙️ FastAPI (Backend)
-               │
-       ┌───────┼───────┐
-       │       │       │
-       ▼       ▼       ▼
-  🧠 Ollama  🗄️ PostgreSQL  🔄 n8n
-  (LLM local)  (BBDD)    (Automatización)
+🖥️ Open WebUI (Docker - Puerto 3080)
+    │
+    ├───────────► 🧠 LM Studio / Ollama (Servidor Local de Inferencia LLM)
+    │
+    └───────────► 🐍 Custom Python Tool (Validación SQL)
+                       │
+                       ▼
+                 🗄️ PostgreSQL (BBDD en tiempo real)
 ```
 
 ---
 
-## 🚀 Estado del proyecto
+## 📸 Demostración del Sistema
 
-- [x] Arquitectura definida
-- [x] Conexión LLM local con Open WebUI
-- [x] Conexión a PostgreSQL en tiempo real
-- [ ] Bot de Telegram funcional
-- [ ] RAG con documentos
-- [ ] Docker Compose completo
+### 1. Interfaz de Chat (Open WebUI con acceso a BBDD)
+![Open WebUI Chat](docs/openwebui-chat.png)
+
+### 2. Motor de Inferencia Local (LM Studio Modo Servidor)
+![LM Studio Server](docs/lmstudio-server.png)
+
+---
+
+## 📁 Estructura del Repositorio
+
+- `docker/`: Archivos `docker-compose.yml` para desplegar Open WebUI.
+- `scripts/`: Herramientas personalizadas en Python para Open WebUI (Conector PostgreSQL seguro).
+- `docs/`: Capturas de pantalla y documentación gráfica de la arquitectura.
 
 ---
 
 ## 👤 Autor
 
-**Ignacio** — [GitHub](https://github.com/nachovillatech)
+**Ignacio** — [GitHub Profile](https://github.com/nachovillatech)
