@@ -1,18 +1,24 @@
 # 🤖 AI Data Assistant (Open WebUI + LM Studio / Ollama + PostgreSQL)
 
-Asistente de IA privado que conecta **Open WebUI** con modelos de lenguaje locales (LLMs) ejecutados a través de **LM Studio / Ollama** y bases de datos PostgreSQL en tiempo real mediante herramientas personalizadas en Python.
+Sistema empresarial de IA privada que conecta **Open WebUI** con modelos de lenguaje locales (LLMs) ejecutados a través de **LM Studio / Ollama** y bases de datos PostgreSQL en tiempo real mediante herramientas personalizadas en Python.
 
-Diseñado para permitir a empresas realizar consultas sobre sus propios datos manteniendo **privacidad total (100% On-Premise, sin costes por API y totalmente gratuito)**.
+Diseñado para permitir a empresas desplegar un ecosistema de IA **100% On-Premise, seguro, auditable y sin costes recurrentes de licencias o APIs externas**.
 
 ---
 
-## ✨ Características clave
+## ✨ Funcionalidades Avanzadas de Nivel Empresarial
 
-- 🔒 **100% Privado, Gratuito y Local:** Basado en modelos de código abierto ejecutados en local mediante LM Studio o Ollama. Los datos nunca salen de la infraestructura de la empresa.
-- ⚡ **Consultas SQL en tiempo real:** Herramienta personalizada de Python que traduce preguntas en lenguaje natural a consultas `SELECT`.
-- 🛡️ **Seguridad integrada:** Filtros estrictos de solo lectura (bloqueo de `DELETE`, `UPDATE`, `DROP`) y timeout de ejecución.
-- 🐳 **Despliegue en Docker:** Entorno contenedorizado para la interfaz con Open WebUI.
-- 📚 **Soporte RAG:** Integración con bases de conocimiento internas (documentación, manuales).
+- 🔒 **100% Privado y Gratuito:** Basado en modelos de código abierto ejecutados en local (LM Studio / Ollama). Privacidad total de datos financieros, logísticos y de clientes.
+- 🏢 **Modelos Personalizados por Departamento:**
+  - Selección del LLM idóneo según la tarea (Razonamiento complejo, Cálculo matemático/estadístico, Modelos Multimodales para Análisis de Imágenes, etc.).
+  - Configuración de *System Prompts* específicos por rol de trabajo.
+- 👥 **Control de Accesos y Permisos Granulares (RBAC):**
+  - Asignación de herramientas, modelos y bases de conocimiento específicas por grupos de trabajo o empleados individuales.
+  - Restricción de acceso para que cada departamento consulte únicamente la información autorizada.
+- 📊 **Auditoría y Control de Consultas:** Registro y trazabilidad de las preguntas y herramientas utilizadas por los usuarios.
+- ⚡ **Consultas a BBDD en Tiempo Real:** Herramienta custom en Python que traduce preguntas en lenguaje natural a consultas SQL `SELECT`.
+- 🛡️ **Seguridad contra Modificaciones:** Filtros estrictos de solo lectura (`DROP`, `DELETE`, `UPDATE` bloqueados) y timeouts de seguridad.
+- 📚 **RAG Multiformato (Bases de Conocimiento):** Indexación de PDFs, documentación técnica, manuales y texto plano para respuestas contextualizadas con documentación interna.
 
 ---
 
@@ -20,28 +26,31 @@ Diseñado para permitir a empresas realizar consultas sobre sus propios datos ma
 
 | Componente | Tecnología |
 |---|---|
-| Interfaz de Usuario | Open WebUI |
-| Motor de Inferencia Local | LM Studio (Modo Servidor OpenAI-compatible) / Ollama |
+| Interfaz de Usuario & Gestión | Open WebUI (Docker) |
+| Motor de Inferencia Local | LM Studio (Servidor OpenAI-Compatible) / Ollama |
 | Base de Datos | PostgreSQL |
-| Integración Custom | Python (`psycopg2`) con validación de seguridad |
-| Contenedores | Docker + Docker Compose |
+| Integraciones Custom | Python (`psycopg2`) con filtrado de seguridad |
+| Orquestación y Contenedores | Docker + Docker Compose |
+| Capacidades LLM | Texto, RAG (PDF/Docs), Visión/Multimodal, SQL Agent |
 
 ---
 
 ## 🏗️ Arquitectura del Sistema
 
 ```
-👤 Empleados (Navegador Web)
-    │
-    ▼
-🖥️ Open WebUI (Docker - Puerto 3080)
-    │
-    ├───────────► 🧠 LM Studio / Ollama (Servidor Local de Inferencia LLM)
-    │
-    └───────────► 🐍 Custom Python Tool (Validación SQL)
-                       │
-                       ▼
-                 🗄️ PostgreSQL (BBDD en tiempo real)
+                        👤 Empleados / Departamentos
+                                     │
+                                     ▼
+                     🖥️ Open WebUI (Docker - Puerto 3080)
+           (Gestión de Permisos RBAC + Auditoría + RAG de PDFs)
+                                     │
+         ┌───────────────────────────┴───────────────────────────┐
+         ▼                                                       ▼
+🧠 Servidor LLM Local (LM Studio/Ollama)               🐍 Custom Python Tool
+(Modelos: Razonamiento, Muestreo, Visión)            (Filtros de Seguridad SQL)
+                                                                 │
+                                                                 ▼
+                                                   🗄️ PostgreSQL (Datos en tiempo real)
 ```
 
 ---
