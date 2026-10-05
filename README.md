@@ -35,6 +35,19 @@ Diseñado para permitir a empresas desplegar un ecosistema de IA **100% On-Premi
 
 ---
 
+---
+## ⚙️ Configuración de Conexión: Open WebUI ↔ LM Studio
+
+Para conectar **Open WebUI** con **LM Studio** localmente:
+
+1. En **LM Studio**: Activa el servidor local (*Local Server* / Icono de desarrollador `<>`) en el puerto por defecto `1234`.
+2. En **Open WebUI** (Panel de Administración → Ajustes → Conexión):
+   - **OpenAI API URL:** `http://IP_DE_TU_SERVIDOR:1234/v1`
+   - **API Key:** `lm-studio` (o cualquier texto, no requiere clave).
+3. Con esto, Open WebUI detecta automáticamente todos los modelos cargados en la memoria de LM Studio (Gemma, Qwen, Llama, etc.).
+
+---
+
 ## 🏗️ Arquitectura del Sistema
 
 ```
