@@ -1,66 +1,59 @@
-# 🤖 AI Data Assistant
+# 🤖 AI Data Assistant (Open WebUI + PostgreSQL)
 
-Asistente de IA privado que conecta modelos de lenguaje locales (LLMs) con bases de datos en tiempo real. Diseñado para que cualquier empresa pueda hacer preguntas sobre sus propios datos sin depender de servicios externos como ChatGPT.
+Asistente de IA privado que conecta **Open WebUI** y modelos de lenguaje locales (LLMs) con bases de datos PostgreSQL en tiempo real mediante herramientas personalizadas en Python.
 
----
-
-## ✨ ¿Qué hace?
-
-- Responde preguntas en lenguaje natural sobre datos reales de una base de datos
-- Funciona 100% en local — los datos nunca salen de la empresa
-- Integración con bots de Telegram para consultas desde cualquier lugar
-- Automatización de flujos con n8n
-- RAG con documentos internos (manuales, catálogos, procedimientos)
+Diseñado para permitir a empresas realizar consultas sobre sus propios datos manteniendo la privacidad total (100% On-Premise).
 
 ---
 
-## 🛠️ Tecnologías usadas
+## ✨ Características clave
 
-| Capa | Tecnología |
+- 🔒 **100% Privado y Local:** Los datos nunca salen de la infraestructura de la empresa.
+- ⚡ **Consultas SQL en tiempo real:** Herramienta personalizada de Python que traduce preguntas en lenguaje natural a consultas `SELECT`.
+- 🛡️ **Seguridad integrada:** Filtros estrictos de solo lectura (bloqueo de `DELETE`, `UPDATE`, `DROP`) y timeout de ejecución.
+- 🐳 **Despliegue sencillo:** Docker Compose para desplegar el entorno en minutos.
+- 📚 **Soporte RAG:** Integración con bases de conocimiento internas (documentación, manuales).
+
+---
+
+## 🛠️ Stack Tecnológico
+
+| Componente | Tecnología |
 |---|---|
-| Modelo de IA | Ollama + modelos locales (Qwen, Llama, Mistral) |
-| Base de datos | PostgreSQL |
-| Interfaz de chat | Open WebUI |
-| Automatización | n8n |
-| Bots | Telegram Bot API |
+| Interfaz de Usuario | Open WebUI |
+| Modelo de IA | Ollama / LM Studio (Modelos locales: Qwen, Llama, Mistral) |
+| Base de Datos | PostgreSQL |
+| Integración Custom | Python (`psycopg2`) con validación de seguridad |
 | Contenedores | Docker + Docker Compose |
-| Backend | Python + FastAPI |
 
 ---
 
-## 🏗️ Arquitectura
+## 🏗️ Arquitectura del Sistema
 
 ```
-👤 Usuario
+👤 Empleados (Navegador Web)
     │
     ▼
-💬 Telegram Bot  ──────  🖥️ Open WebUI
-    │                         │
-    └──────────┬──────────────┘
-               │
-               ▼
-        ⚙️ FastAPI (Backend)
-               │
-       ┌───────┼───────┐
-       │       │       │
-       ▼       ▼       ▼
-  🧠 Ollama  🗄️ PostgreSQL  🔄 n8n
-  (LLM local)  (BBDD)    (Automatización)
+🖥️ Open WebUI (Puerto 3080)
+    │
+    ├───────────► 🧠 Ollama / LM Studio (Motor LLM)
+    │
+    └───────────► 🐍 Custom Python Tool (Validación SQL)
+                       │
+                       ▼
+                 🗄️ PostgreSQL (BBDD en tiempo real)
 ```
 
 ---
 
-## 🚀 Estado del proyecto
+## 📁 Estructura del Repositorio
 
-- [x] Arquitectura definida
-- [x] Conexión LLM local con Open WebUI
-- [x] Conexión a PostgreSQL en tiempo real
-- [ ] Bot de Telegram funcional
-- [ ] RAG con documentos
-- [ ] Docker Compose completo
+- `docker/`: Archivos `docker-compose.yml` para desplegar Open WebUI.
+- `scripts/`: Herramientas personalizadas en Python para Open WebUI (Conector PostgreSQL seguro).
+- `docs/`: Guías de configuración y capturas del sistema.
 
 ---
 
 ## 👤 Autor
 
-**Ignacio** — [GitHub](https://github.com/nachovillatech)
+**Ignacio** — [GitHub Profile](https://github.com/nachovillatech)
